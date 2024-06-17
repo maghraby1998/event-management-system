@@ -1,0 +1,47 @@
+POST http://localhost:8000/api/auth/register HTTP/1.1
+Accept: : application/json
+Content-Type: application/json
+
+{
+    "name": "ahmed elmaghraby mohamed elsayed",
+    "email": "maghraby@gmail.com",
+    "password": "1234567891"
+}
+
+###
+
+POST http://localhost:8000/api/auth/login HTTP/1.1
+Accept: : application/json
+Content-Type: application/json
+
+{
+    "email": "maghraby@gmail.com",
+    "password": "1234567891"
+}
+
+###
+GET http://localhost:8000/api/events HTTP/1.1
+Accept: application/json
+Authorization: Bearer 1|9LXyJS2qwWaNrfLCX4FQWKzhX69OPVU6rGITi7pq4833557d
+
+###
+POST http://localhost:8000/api/event HTTP/1.1
+Accept: application/json
+Authorization: Bearer 1|9LXyJS2qwWaNrfLCX4FQWKzhX69OPVU6rGITi7pq4833557d
+Content-Type: application/json
+
+{
+    "name":"my first event",
+    "from": "2024-06-16 10:00:00",
+    "to": "2024-06-16 12:00:00"
+}
+
+###
+POST http://localhost:8000/api/join-event HTTP/1.1
+Accept: application/json
+Authorization: Bearer 1|9LXyJS2qwWaNrfLCX4FQWKzhX69OPVU6rGITi7pq4833557d
+Content-Type: application/json
+
+{
+    "eventId": "1"
+}
