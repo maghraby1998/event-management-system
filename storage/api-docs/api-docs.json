@@ -1,0 +1,287 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "My First API",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/auth/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "auth register",
+                "description": "new account",
+                "operationId": "register",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "name": "John Doe",
+                                    "email": "john.doe@example.com",
+                                    "password": "1234567891"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "auth login",
+                "description": "new account",
+                "operationId": "login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "name": "John Doe",
+                                    "email": "john.doe@example.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/api/events": {
+            "get": {
+                "tags": [
+                    "Events"
+                ],
+                "summary": "get all events",
+                "description": "get all the created events",
+                "operationId": "events",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "failed events"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Events"
+                ],
+                "summary": "make an event",
+                "description": "create event",
+                "operationId": "make event",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "failed event"
+                    }
+                }
+            }
+        },
+        "/api/events/{eventId}/join": {
+            "post": {
+                "tags": [
+                    "Events"
+                ],
+                "summary": "join event",
+                "description": "join event",
+                "operationId": "join event",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "failed events"
+                    }
+                }
+            }
+        },
+        "/api/events/{eventId}/remove-user/{userId}": {
+            "post": {
+                "tags": [
+                    "Events"
+                ],
+                "summary": "remove user from event",
+                "description": "remove user from event",
+                "operationId": "remove user",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "failed events"
+                    }
+                }
+            }
+        },
+        "/api/events/{eventId}": {
+            "delete": {
+                "tags": [
+                    "Events"
+                ],
+                "summary": "delete event",
+                "description": "delete event",
+                "operationId": "delete event",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "failed events"
+                    }
+                }
+            }
+        },
+        "/api/events/{eventId}/exit-event": {
+            "post": {
+                "tags": [
+                    "Events"
+                ],
+                "summary": "exit event",
+                "description": "exit event",
+                "operationId": "exit event",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "failed events"
+                    }
+                }
+            }
+        },
+        "/api/requests": {
+            "get": {
+                "tags": [
+                    "Requests"
+                ],
+                "summary": "get my requests",
+                "description": "get my requests",
+                "operationId": "get my requests",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "failed requests"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Requests"
+                ],
+                "summary": "make request",
+                "description": "make request",
+                "operationId": "make request",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "failed requests"
+                    }
+                }
+            }
+        },
+        "/api/requests/{requestId}/accept": {
+            "post": {
+                "tags": [
+                    "Requests"
+                ],
+                "summary": "accept request",
+                "description": "accept request",
+                "operationId": "accept request",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "failed requests"
+                    }
+                }
+            }
+        },
+        "/api/requests/{requestId}/reject": {
+            "post": {
+                "tags": [
+                    "Requests"
+                ],
+                "summary": "reject request",
+                "description": "reject request",
+                "operationId": "reject request",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "failed requests"
+                    }
+                }
+            }
+        },
+        "/api/requests/{requestId}/cancel": {
+            "post": {
+                "tags": [
+                    "Requests"
+                ],
+                "summary": "cancel request",
+                "description": "cancel request",
+                "operationId": "cancel request",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "failed requests"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Request;
 
 class User extends Authenticatable
 {
@@ -44,11 +45,23 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function myEvents(): HasMany {
+    public function myEvents(): HasMany
+    {
         return $this->hasMany(Event::class, "created_by");
     }
 
-    public function joinedEvents() {
-        return $this->belongsToMany(Event::class, "user_events");
+    public function joinedEvents()
+    {
+        return $this->belongsToMany(Event::class, "user_events")->withTimestamps();
+    }
+
+    public function favouriteEvents()
+    {
+        return $this->belongsToMany(Event::class, "user_favourite_events")->withTimestamps();
+    }
+
+    public function requests()
+    {
+        return $this->hasMany(Request::class);
     }
 }

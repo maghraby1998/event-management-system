@@ -22,9 +22,14 @@ class MakeEventValidator extends FormRequest
     public function rules(): array
     {
         return [
+            'id' => 'nullable|integer',
             'name' => 'required|string|max:255',
             'from' => 'required|date|max:255',
-            'to' => 'required|date|max:255',
+            'to' => 'required|date|max:255|after:from',
+            'description' => 'required|string|max:255',
+            'extra_description' => 'nullable|string|max:255',
+            'image' => 'nullable|image',
+            // 'isPublic' => 'bool'
         ];
     }
 }
