@@ -63,3 +63,29 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 });
+
+Route::get("/verify-email/{userId}/{token}", [AuthController::class, "verifyEmail"])->name("verify.email");
+
+
+
+
+// running SQL queries
+////////////////////////
+// DB::select
+// DB::insert
+// DB::update
+// DB::delete
+// DB::scalar -> to return a single value ex: (count(*))
+
+
+
+
+// query builder
+////////////////////////
+// DB::table()->get();
+// DB::table()->find();
+
+Route::get("test", function () {
+    $migrationsWithCount = DB::table("migrations")->select(DB::raw("count(*) as total_number, id"))->where("id", "<=", "10")->orderBy("id")->groupBy("id")->get();
+    return $migrationsWithCount;
+});

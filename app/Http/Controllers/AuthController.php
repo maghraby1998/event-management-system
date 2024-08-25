@@ -81,4 +81,10 @@ class AuthController extends Controller
     {
         return AuthService::login($request);
     }
+
+    public function verifyEmail(Request $request)
+    {
+        return AuthService::verifyEmail($request->userId, $request->token);
+    }
+
 }
