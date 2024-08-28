@@ -20,7 +20,7 @@ jobs:
           ini-values: post_max_size=256M, upload_max_filesize=256M, memory_limit=1G
           coverage: none
 
-      - name: Create .env file
+      - name: Creating a random file then listing current directory (testing ci)
         run: |
           touch newfile.txt
           ls
