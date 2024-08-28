@@ -12,5 +12,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-       - name: Install Composer dependencies
-        run: echo "it's wokring fine"
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+          extensions: mbstring, pdo, mysql, dom, gd
+          ini-values: post_max_size=256M, upload_max_filesize=256M, memory_limit=1G
+          coverage: none
+
+      - name: Create .env file
+        run: |
+          echo test
