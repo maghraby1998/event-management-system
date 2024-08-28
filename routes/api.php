@@ -43,6 +43,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::post("/{eventId}/toggle-favourite", [EventController::class, "toggleFavourite"]);
 
+        Route::post("/{eventId}/request-to-join", [EventController::class, "requestToJoinEvent"]);
+
+
     });
 
 

@@ -29,7 +29,7 @@ class MakeEventValidator extends FormRequest
             'description' => 'required|string|max:255',
             'extra_description' => 'nullable|string|max:255',
             'image' => 'nullable|image',
-            // 'isPublic' => 'bool'
+            'isPublic' => 'string'
         ];
     }
 }

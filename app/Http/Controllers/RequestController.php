@@ -8,29 +8,6 @@ use App\Http\Requests\MakeRequestValidator;
 
 class RequestController extends Controller
 {
-    /**
-     * register.
-     *
-     * @OA\Post(
-     *      path="/api/requests",
-     *      operationId="make request",
-     *      tags={"Requests"},
-     *      summary="make request",
-     *      description="make request",
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *      ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="failed requests"
-     *      )
-     * )
-     */
-    public function makeRequest(MakeRequestValidator $request)
-    {
-        return RequestService::makeRequest(auth()->id(), $request->eventId);
-    }
 
     /**
      * register.

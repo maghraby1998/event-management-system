@@ -6,6 +6,7 @@ use App\Models\Event;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Request;
 
 class EventService
 {
@@ -44,7 +45,6 @@ class EventService
             }
         }
 
-
         return Event::updateOrCreate(["id" => $eventId], [
             "created_by" => $userId,
             "name" => $request->name,
@@ -52,8 +52,7 @@ class EventService
             "to" => $request->to,
             "description" => $request->description,
             "extra_description" => $request->extra_description,
-            // "is_public" => $request->isPublic,
-            "is_public" => true,
+            "is_public" => $request->isPublic == "true" ? 1 : 0,
             "image" => $imagePath
         ]);
     }
@@ -158,4 +157,35 @@ class EventService
             "status" => "success"
         ]);
     }
+
+    public static function requestToJoinEvent($userId, $eventId)
+    {
+
+        $user = User::findOrFail($userId);
+
+        if ($user->joinedEvents()->find($eventId)) {
+            return response()->json([
+                "message" => "you already joined this event"
+            ], 400);
+        }
+
+        $request = Request::where("user_id", $userId)->where("event_id", $eventId)->first();
+
+        if ($request) {
+            return response()->json([
+                "message" => "you already requested to join this event"
+            ], 400);
+        }
+
+        $request = Request::create([
+            'user_id' => $userId,
+            'event_id' => $eventId,
+            'status' => "pending",
+        ]);
+
+        return response()->json([
+            "message" => "your request has been succesfully created"
+        ]);
+    }
+
 }

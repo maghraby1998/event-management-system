@@ -10,46 +10,18 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 
-class RequestService {
+class RequestService
+{
 
-	public static function makeRequest($userId, $eventId) {
-
-		$user = User::findOrFail($userId);
-
-		if ($user->joinedEvents()->find($eventId)) {
-			return response()->json([
-				"message" => "you already joined this event"
-			], 400);
-		}
-
-		$event = Event::findOrFail($eventId);
-
-		$request = Request::where("user_id", $userId)->where("event_id", $eventId)->first();
-
-		if ($request) {
-			return response()->json([
-				"message" => "you already requested to join this event"
-			], 400);
-		} 
-
-		$request = Request::create([
-			'user_id' => $userId,
-			'event_id' => $eventId,
-			'status' => "pending",
-		]);
-
-		return response()->json([
-			"message" => "your request has been succesfully created"
-		]);
-	}
-
-	public static function myRequests($request) {
+	public static function myRequests($request)
+	{
 		$user = User::findOrFail(auth()->id());
 
-		return $user->requests()->filter(['status' => $request->status])->select(['id', 'event_id', 'status', 'created_at' ])->with('event:id,name,from,to')->get();
+		return $user->requests()->filter(['status' => $request->status])->select(['id', 'event_id', 'status', 'created_at'])->with('event:id,name,from,to')->get();
 	}
 
-	public static function acceptRequest($requestId){		
+	public static function acceptRequest($requestId)
+	{
 
 		$request = Request::findOrFail($requestId);
 
@@ -63,15 +35,15 @@ class RequestService {
 
 			return response()->json([
 				'message' => "you can't accept this request because this request is {$request->status}"
-			],400);
+			], 400);
 
-		} else {			
+		} else {
 
-					$request->status = "accepted";
+			$request->status = "accepted";
 
-					$request->save();
+			$request->save();
 
-					UserJoinEventJob::dispatch($request->user_id, $request->event_id);
+			UserJoinEventJob::dispatch($request->user_id, $request->event_id);
 
 
 			return response()->json([
@@ -79,10 +51,11 @@ class RequestService {
 			]);
 
 		}
-			
+
 	}
 
-	public static function rejectRequest($requestId) {
+	public static function rejectRequest($requestId)
+	{
 		$request = Request::findOrFail($requestId);
 
 		if (!Gate::allows("rejectRequest", $request)) {
@@ -105,7 +78,8 @@ class RequestService {
 		}
 	}
 
-	public static function cancelRequest($requestId) {
+	public static function cancelRequest($requestId)
+	{
 		$request = Request::findOrFail($requestId);
 
 		if (!Gate::allows("cancelRequest", $request)) {

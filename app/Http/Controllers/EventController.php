@@ -176,4 +176,9 @@ class EventController extends Controller
     {
         return EventService::toggleFavourite($eventId);
     }
+
+    public function requestToJoinEvent($eventId)
+    {
+        return EventService::requestToJoinEvent(auth()->id(), $eventId);
+    }
 }
