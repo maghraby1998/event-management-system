@@ -77,13 +77,13 @@ class Event extends Model
 
     public function canRequestToJoin()
     {
-        $request = Request::where("user_id", auth()->id())->where("event_id", $this->id)->first();
+        $request = Request::where("user_id", auth()->id())->where("event_id", $this->id)->where("status", "pending")->first();
         return $this->created_by->id != auth()->id() && !$this->is_public && !$this->isAuthJoined() && !$request;
     }
 
     public function requestedToJoin()
     {
-        $request = Request::where("user_id", auth()->id())->where("event_id", $this->id)->first();
+        $request = Request::where("user_id", auth()->id())->where("event_id", $this->id)->where("status", "pending")->first();
         return $request ? true : false;
     }
 

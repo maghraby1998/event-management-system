@@ -169,7 +169,7 @@ class EventService
             ], 400);
         }
 
-        $request = Request::where("user_id", $userId)->where("event_id", $eventId)->first();
+        $request = Request::where("user_id", $userId)->where("event_id", $eventId)->where("status", "pending")->first();
 
         if ($request) {
             return response()->json([

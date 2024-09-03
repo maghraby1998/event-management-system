@@ -38,14 +38,16 @@ class UserJoinEventJob implements ShouldQueue
 
         $user->joinedEvents()->attach($this->eventId);
 
-        $event = Event::find($this->eventId);
+        //////// commented sending email after a user join the event //////
 
-        $eventOwnerName = $event->user->name;
+        // $event = Event::find($this->eventId);
 
-        $eventRequesterName = $user->name;
+        // $eventOwnerName = $event->user->name;
 
-        $eventName = $event->name;
+        // $eventRequesterName = $user->name;
 
-        Mail::to($event->user)->send(new JoinEventRequestMail($eventOwnerName, $eventRequesterName, $eventName));
+        // $eventName = $event->name;
+
+        // Mail::to($event->user)->send(new JoinEventRequestMail($eventOwnerName, $eventRequesterName, $eventName));
     }
 }

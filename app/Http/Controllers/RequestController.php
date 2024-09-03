@@ -33,6 +33,11 @@ class RequestController extends Controller
         return RequestService::myRequests($request);
     }
 
+    public function myReceivedRequests(Request $request)
+    {
+        return RequestService::myReceivedRequests($request);
+    }
+
     /**
      * register.
      *

@@ -55,6 +55,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::get("/my-requests", [RequestController::class, "myRequests"]);
 
+        Route::get("/my-received-requests", [RequestController::class, "myReceivedRequests"]);
+
         Route::post("/{requestId}/accept", [RequestController::class, "acceptRequest"]);
 
         Route::post("/{requestId}/reject", [RequestController::class, "rejectRequest"]);

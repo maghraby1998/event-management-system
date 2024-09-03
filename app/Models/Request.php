@@ -17,20 +17,47 @@ class Request extends Model
         'status',
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function event() {
+    public function event()
+    {
         return $this->belongsTo(Event::class);
     }
 
-    public function scopeFilter($query, $filters) {
+    public function scopeFilter($query, $filters)
+    {
         if (isset($filters['status'])) {
             $query->where("status", $filters['status']);
         }
 
         return $query;
+    }
+
+    public function canAcceptOrReject()
+    {
+        if ($this->status === "pending") {
+            $eventCreatorId = $this->event->user->id;
+
+            if ($eventCreatorId == auth()->id()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function canCancel()
+    {
+        if ($this->status === "pending") {
+            if ($this->user_id == auth()->id()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }
