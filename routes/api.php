@@ -33,6 +33,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::post("/", [EventController::class, "makeEvent"]);
 
+        Route::get("/{eventId}", [EventController::class, "getEventDetails"]);
+
         Route::post("/{eventId}/join", [EventController::class, "joinEvent"]);
 
         Route::post("/{eventId}/remove-user/{userId}", [EventController::class, "removeUser"]);

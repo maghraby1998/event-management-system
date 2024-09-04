@@ -181,4 +181,11 @@ class EventController extends Controller
     {
         return EventService::requestToJoinEvent(auth()->id(), $eventId);
     }
+
+    public function getEventDetails($eventId)
+    {
+        return EventService::getEventDetails($eventId);
+    }
+
+
 }

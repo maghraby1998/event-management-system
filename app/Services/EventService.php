@@ -188,4 +188,12 @@ class EventService
         ]);
     }
 
+    public static function getEventDetails($eventId)
+    {
+        $event = Event::where("id", $eventId)->with("users", "user:id,name")->first();
+        $event->created_by = $event->user;
+        unset($event->user);
+        return $event;
+    }
+
 }
