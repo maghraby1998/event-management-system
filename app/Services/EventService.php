@@ -82,14 +82,13 @@ class EventService
         }
     }
 
-    public static function removeUserFromEvent($userId, $eventId)
+    public static function removeUserFromEvent($eventId, $userId)
     {
         $user = User::findOrFail($userId);
-
         $user->joinedEvents()->detach($eventId);
     }
 
-    public static function removeUser($userId, $eventId)
+    public static function removeUser($eventId, $userId)
     {
         $event = Event::findOrFail($eventId);
 
@@ -97,7 +96,7 @@ class EventService
             abort(403);
         }
 
-        return self::removeUserFromEvent($userId, $eventId);
+        return self::removeUserFromEvent($eventId, $userId);
     }
 
     public static function deleteEvent($eventId, $forceDelete = false)
@@ -131,7 +130,7 @@ class EventService
             abort(403);
         }
 
-        self::removeUserFromEvent(auth()->id(), $eventId);
+        self::removeUserFromEvent($eventId, auth()->id());
 
         return response()->json([
             'message' => "you have exited the event successfully"
@@ -192,6 +191,7 @@ class EventService
     {
         $event = Event::where("id", $eventId)->with("users", "user:id,name")->first();
         $event->created_by = $event->user;
+        $event->canTakeActions = $event->canTakeActions();
         unset($event->user);
         return $event;
     }

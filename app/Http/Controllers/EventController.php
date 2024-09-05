@@ -100,7 +100,7 @@ class EventController extends Controller
      *      )
      * )
      */
-    public function removeUser($eventId, $userId, Request $request)
+    public function removeUser($eventId, $userId)
     {
         return EventService::removeUser($eventId, $userId);
     }
