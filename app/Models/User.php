@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Request;
+use App\Models\Chat;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -69,5 +70,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function emailToken()
     {
         return $this->hasOne(UserEmailVerificationTokens::class);
+    }
+
+    public function chats()
+    {
+        return Chat::where("first_user_id", $this->id)->orWhere("second_user_id", $this->id);
     }
 }
