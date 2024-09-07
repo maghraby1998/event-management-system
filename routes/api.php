@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\RequestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -66,6 +68,16 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post("/{requestId}/cancel", [RequestController::class, "cancelRequest"]);
 
 
+    });
+
+
+    Route::prefix("chats")->group(function () {
+        Route::get("/", [ChatController::class, "getMyChats"]);
+    });
+
+    Route::prefix("messages")->group(function () {
+        Route::get("/{chatId}", [MessageController::class, "getChatMessages"]);
+        Route::post("/", [MessageController::class, "sendMessage"]);
     });
 
 
