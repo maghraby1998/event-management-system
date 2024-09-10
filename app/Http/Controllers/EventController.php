@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\MakeEventValidator;
+use App\Models\Event;
+use App\Models\User;
 use App\Services\EventService;
 use Illuminate\Http\Request;
 
@@ -185,6 +187,17 @@ class EventController extends Controller
     public function getEventDetails($eventId)
     {
         return EventService::getEventDetails($eventId);
+    }
+
+    public function getUsersToInvite($eventId)
+    {
+        $usersInEvent = Event::find($eventId)->users()->pluck("users.id")->toArray();
+
+        return User::where("id", "!=", auth()->id())->select(["id", "name"])->get()->map(function ($user) use ($usersInEvent) {
+            $user->isAlreadyInEvent = in_array($user->id, $usersInEvent);
+            return $user;
+        });
+
     }
 
 

@@ -29,6 +29,8 @@ Route::post("/auth/login", [AuthController::class, "login"]);
 
 Route::middleware('auth:sanctum')->group(function () {
 
+
+
     Route::prefix('events')->group(function () {
 
         Route::get("/", [EventController::class, "events"]);
@@ -48,6 +50,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post("/{eventId}/toggle-favourite", [EventController::class, "toggleFavourite"]);
 
         Route::post("/{eventId}/request-to-join", [EventController::class, "requestToJoinEvent"]);
+
+        Route::get("/{eventId}/users-to-invite", [EventController::class, "getUsersToInvite"]);
 
 
     });
@@ -79,6 +83,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get("/{chatId}", [MessageController::class, "getChatMessages"]);
         Route::post("/", [MessageController::class, "sendMessage"]);
     });
+
 
 
 });
