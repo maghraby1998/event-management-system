@@ -196,4 +196,15 @@ class EventService
         return $event;
     }
 
+    public static function getUsersToInvite($eventId)
+    {
+        $usersInEvent = Event::find($eventId)->users()->pluck("users.id")->toArray();
+
+        return User::where("id", "!=", auth()->id())->select(["id", "name"])->get()->map(function ($user) use ($usersInEvent) {
+            $user->isAlreadyInEvent = in_array($user->id, $usersInEvent);
+            return $user;
+        });
+
+    }
+
 }

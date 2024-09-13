@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\RequestController;
 use Illuminate\Http\Request;
@@ -72,6 +73,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post("/{requestId}/cancel", [RequestController::class, "cancelRequest"]);
 
 
+    });
+
+    Route::prefix("invitations")->group(function () {
+        Route::get("/received", [InvitationController::class, "getReceivedInvitations"]);
+        Route::get("/sent", [InvitationController::class, "getSentInvitations"]);
+        Route::post("/send", [InvitationController::class, "inviteUsers"]);
     });
 
 
