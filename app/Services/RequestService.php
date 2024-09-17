@@ -56,7 +56,7 @@ class RequestService
 
 		return Request::whereHas("event", function ($query) use ($authId) {
 			$query->where("created_by", $authId);
-		})->select(['id', 'event_id', 'user_id', 'status', 'created_at'])->with('event:id,name,created_by')->get()->map(function ($request) {
+		})->with("user:id,name")->select(['id', 'event_id', 'user_id', 'status', 'created_at'])->with('event:id,name,created_by')->get()->map(function ($request) {
 			$request->canAccept = $request->canAcceptOrReject();
 			$request->canReject = $request->canAcceptOrReject();
 			return $request;
