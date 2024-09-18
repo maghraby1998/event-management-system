@@ -9,7 +9,12 @@ class InvitationService
 
     public static function getReceivedInvitations()
     {
-        return Invitation::where("receiver_id", auth()->id())->get();
+        return Invitation::where("receiver_id", auth()->id())->with(["sender:id,name", "receiver:id,name", "event:id,name"])->get()->map(function ($invitation) {
+            $invitation->canAccept = $invitation->canAccept();
+            $invitation->canReject = $invitation->canReject();
+            $invitation->canCancel = $invitation->canCancel();
+            return $invitation;
+        });
     }
 
     public static function getSentInvitations()
