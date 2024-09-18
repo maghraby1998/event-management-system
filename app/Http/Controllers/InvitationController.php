@@ -22,6 +22,12 @@ class InvitationController extends Controller
         return InvitationService::inviteUsers($request);
     }
 
+    public function acceptInvitation($invitationId)
+    {
+        return InvitationService::acceptInvitation($invitationId);
+    }
+
+
 
 
 

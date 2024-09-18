@@ -79,6 +79,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get("/received", [InvitationController::class, "getReceivedInvitations"]);
         Route::get("/sent", [InvitationController::class, "getSentInvitations"]);
         Route::post("/send", [InvitationController::class, "inviteUsers"]);
+        Route::post("/{invitationId}/accept", [InvitationController::class, "acceptInvitation"]);
     });
 
 

@@ -2,6 +2,7 @@
 
 
 namespace App\Services;
+use App\Jobs\UserJoinEventJob;
 use App\Models\Invitation;
 
 class InvitationService
@@ -50,6 +51,75 @@ class InvitationService
             "message" => "Invitations has been sent"
         ]);
 
+    }
+
+    public static function acceptInvitation($invitationId)
+    {
+        $invitation = Invitation::findOrFail($invitationId);
+
+        if ($invitation->status == "pending") {
+
+            $eventId = $invitation->event_id;
+
+            $receiverId = $invitation->receiver_id;
+
+            $invitation->status = "accepted";
+
+            $invitation->save();
+
+            UserJoinEventJob::dispatch($receiverId, $eventId);
+
+            return response()->json([
+                "status" => "success",
+                "message" => "Joined"
+            ]);
+        } else {
+            return response()->json([
+                "status" => "failed",
+                "message" => "Can't accept invitation because it's already $invitation->status"
+            ], 400);
+        }
+    }
+
+    public static function cancelInvitation($invitationId)
+    {
+        $invitation = Invitation::findOrFail($invitationId);
+
+        if ($invitation->status == "pending") {
+
+            $invitation->status = "canceled";
+            $invitation->save();
+            return response()->json([
+                "status" => "success",
+                "message" => "Invitation has been canceled"
+            ]);
+        } else {
+            return response()->json([
+                "status" => "failed",
+                "message" => "You can't cancel the invitation because it's already $invitation->status"
+            ]);
+        }
+    }
+
+    public static function rejectInvitation($invitationId)
+    {
+        $invitation = Invitation::findOrFail($invitationId);
+
+        if ($invitation->status == "pending") {
+
+            $invitation->status = "rejected";
+            $invitation->save();
+
+            return response()->json([
+                "status" => "success",
+                "message" => "Invitation has been rejected"
+            ]);
+        } else {
+            return response()->json([
+                "status" => "failed",
+                "message" => "You can't cancel the invitation because it's already $invitation->status"
+            ]);
+        }
     }
 
 }
