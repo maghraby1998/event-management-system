@@ -25,7 +25,7 @@ class MakeEventValidator extends FormRequest
             'id' => 'nullable|integer',
             'name' => 'required|string|max:255',
             'from' => 'required|date|max:255',
-            'to' => 'required|date|max:255|after:from',
+            'to' => 'required|date_format:Y-m-d H:i:s|after:from',
             'description' => 'required|string|max:255',
             'extra_description' => 'nullable|string|max:255',
             'image' => 'nullable|image',

@@ -27,6 +27,16 @@ class InvitationController extends Controller
         return InvitationService::acceptInvitation($invitationId);
     }
 
+    public function rejectInvitation($invitationId)
+    {
+        return InvitationService::rejectInvitation($invitationId);
+    }
+
+    public function cancelInvitation($invitationId)
+    {
+        return InvitationService::cancelInvitation($invitationId);
+    }
+
 
 
 

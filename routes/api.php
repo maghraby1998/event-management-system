@@ -80,6 +80,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get("/sent", [InvitationController::class, "getSentInvitations"]);
         Route::post("/send", [InvitationController::class, "inviteUsers"]);
         Route::post("/{invitationId}/accept", [InvitationController::class, "acceptInvitation"]);
+        Route::post("/{invitationId}/reject", [InvitationController::class, "rejectInvitation"]);
+        Route::post("/{invitationId}/cancel", [InvitationController::class, "cancelInvitation"]);
     });
 
 
