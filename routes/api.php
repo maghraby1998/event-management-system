@@ -6,6 +6,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\RequestController;
+use App\Services\FCMService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -122,4 +123,10 @@ Route::get("/verify-email/{userId}/{token}", [AuthController::class, "verifyEmai
 Route::get("test", function () {
     $migrationsWithCount = DB::table("migrations")->select(DB::raw("count(*) as total_number, id"))->where("id", "<=", "10")->orderBy("id")->groupBy("id")->get();
     return $migrationsWithCount;
+});
+
+Route::get("notify", function () {
+    $fcmService = new FCMService();
+
+    $fcmService->sendNotification(["c8YNNL5Rm3owkJfv0fwiw_:APA91bFtRJJkfA_E69R32sm3dSBWIlVcdj1JsquTVv4s5sVMFr36be1pM4k5gcYQtx8WCfM_Z8DtTWb4DWFlxMgRXq_ewl1kaheTA4ttARmg-XkYSjs0IzUTm10qvY-6mhIKetWyB06u"], "hello from laravel", "is it working ?");
 });
