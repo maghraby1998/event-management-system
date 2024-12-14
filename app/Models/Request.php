@@ -29,7 +29,7 @@ class Request extends Model
 
     public function scopeFilter($query, $filters)
     {
-        if (isset($filters['status'])) {
+        if (isset($filters['status']) && $filters['status'] != 'all') {
             $query->where("status", $filters['status']);
         }
 

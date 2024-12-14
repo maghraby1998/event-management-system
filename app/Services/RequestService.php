@@ -18,7 +18,7 @@ class RequestService
 	{
 		$user = User::findOrFail(auth()->id());
 
-		return $user->requests()->filter(['status' => $request->status])->select(['id', 'event_id', 'user_id', 'status', 'created_at'])->with('event:id,name')->get()->map(function ($request) {
+		return $user->requests()->filter(['status' => $request->status])->select(['id', 'event_id', 'user_id', 'status', 'created_at'])->with('event:id,name')->orderBy('created_at', 'DESC')->get()->map(function ($request) {
 			$request->canCancel = $request->canCancel();
 			return $request;
 		});
