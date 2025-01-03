@@ -29,6 +29,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post("/auth/register", [AuthController::class, "register"]);
 Route::post("/auth/login", [AuthController::class, "login"]);
 
+Route::middleware(\App\Http\Middleware\TestMiddleware::class)->group(function () {
+    Route::get("testing", function () {
+        dd("is it working");
+    });
+});
+
 Route::middleware('auth:sanctum')->group(function () {
 
 
@@ -129,4 +135,13 @@ Route::get("notify", function () {
     $fcmService = new FCMService();
 
     $fcmService->sendNotification(["c8YNNL5Rm3owkJfv0fwiw_:APA91bFtRJJkfA_E69R32sm3dSBWIlVcdj1JsquTVv4s5sVMFr36be1pM4k5gcYQtx8WCfM_Z8DtTWb4DWFlxMgRXq_ewl1kaheTA4ttARmg-XkYSjs0IzUTm10qvY-6mhIKetWyB06u"], "hello from laravel", "is it working ?");
+});
+
+Route::get("/another-one", function () {
+    return (\App\Models\Invitation::select(["id", "event_id", "sender_id"])->with("sender:id,name")->with("event:id,name")->first());
+    dd(\DB::table("invitations")
+        ->join("users", "users.id", "=", "invitations.sender_id")
+        ->join("events", "events.id", "=", "invitations.event_id")
+        ->select(["invitations.id as invitation_id", "users.id as userId", "users.name as username", "events.name as eventName"])
+        ->get());
 });

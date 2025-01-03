@@ -33,6 +33,12 @@ class InvitationService
         $eventId = $request->eventId;
         $userIds = $request->userIds;
 
+        $alreadyInvitedUserIds = Invitation::where("event_id", $eventId)->whereIn("receiver_id", $userIds)->pluck("receiver_id")->unique()->toArray();
+
+        $userIds = array_filter($userIds, function ($id) use ($alreadyInvitedUserIds) {
+            return !in_array($id, $alreadyInvitedUserIds);
+        });
+
         $invitations = [];
 
         foreach ($userIds as $userId) {
